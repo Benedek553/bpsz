@@ -1,16 +1,10 @@
 <?php
-// PHP Data Objects(PDO) Sample Code:
-try {
-    $conn = new PDO("sqlsrv:server = tcp:bpsz.database.windows.net,1433; Database = bpsz", "sqladmin", "Password2024@2024");
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}
-catch (PDOException $e) {
-    print("Error connecting to SQL Server.");
-    die(print_r($e));
-}
+$connectionString = "Driver={ODBC Driver 18 for SQL Server};Server=tcp:bpsz.database.windows.net,1433;Database=bpsz;Uid=sqladmin;Pwd={your_password_here};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;";
 
-// SQL Server Extension Sample Code:
-$connectionInfo = array("UID" => "sqladmin", "pwd" => "{your_password_here}", "Database" => "bpsz", "LoginTimeout" => 30, "Encrypt" => 1, "TrustServerCertificate" => 0);
-$serverName = "tcp:bpsz.database.windows.net,1433";
-$conn = sqlsrv_connect($serverName, $connectionInfo);
+$conn = odbc_connect($connectionString, '', '');
+if ($conn) {
+    echo "Sikeres kapcsolat!";
+} else {
+    echo "Kapcsolati hiba: " . odbc_errormsg();
+}
 ?>
